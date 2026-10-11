@@ -3,24 +3,24 @@
    otherwise the most natural browser voice, with prosody variation and
    karaoke captions so the narration feels like a real person. */
 (()=>{
-const SPEED=1.12,/* narration speed: 1 = normal, higher = faster */SS=window.speechSynthesis,still=matchMedia('(prefers-reduced-motion: reduce)').matches,onAgency=!!document.getElementById('agency-brief'),KEY='gm-tour-state',PAGE=onAgency?'agency':'home',TAP='Tap anywhere to turn the sound on.';
+const SPEED=.93,/* narration speed: 1 = normal, higher = faster */SS=window.speechSynthesis,still=matchMedia('(prefers-reduced-motion: reduce)').matches,onAgency=!!document.getElementById('agency-brief'),KEY='gm-tour-state',PAGE=onAgency?'agency':'home',TAP='Tap anywhere to turn the sound on.';
 const SCRIPT={
-intro:['','Hey, welcome to Greenmelons. Fresh minds, serious creative. We help businesses and marketing agencies turn ideas into finished work \u2014 without the extra overhead of building a bigger team. Whether you need creative support for your own marketing, or an extra pair of hands behind the scenes, we\u2019re here to help you get the work done. So, let\u2019s start with one question. Are you here as a business, or are you an agency?'],
-b1:['#value','Here\u2019s the thing. Marketing teams are busy, and the work never really slows down. Greenmelons gives you more creative capacity to get things done, without hiring for every new requirement.'],
-b2:['#for','Think of us as your creative department. Your marketing, our creative department. We work alongside your team, so your projects keep moving.'],
-b3:['#services','Here\u2019s what we can take on. Campaign creative, social and digital content, sales and marketing collateral, brand identity, website design, and campaign planning. The scope of every project is agreed with you up front.'],
-b4:['#how','And here\u2019s how it works. You brief us. We plan the work together, agreeing scope, timeline and pricing. Then we create, with agreed feedback rounds, and deliver files that are ready to use.'],
-b5:['#support','Need more than a one-off project? We can also talk about ongoing creative support, with scope and fees agreed in advance. Your team doesn\u2019t have to do it all.'],
-b6:['#contact','Got a project in mind? Let\u2019s make something happen. Send us a brief, and we\u2019ll come back to you by email.'],
-a1:['#value','When briefs stack up and deadlines get tight, extra capacity makes all the difference. We give agencies additional production capacity, without growing permanent headcount.'],
-a2:['#for','You win the work. We\u2019ll help you deliver. We can work behind the scenes, white-label where needed, with confidentiality and arrangements agreed for each engagement.'],
-a3:['#support','That could be a single project, or recurring support, with scope and fees agreed in advance. Our agency page has the full detail.'],
-a4:['#how','The process is simple. You brief us, we plan the work together, we create and refine through agreed feedback rounds, and we hand over files ready for your workflow. Got a brief? Let\u2019s make something happen.'],
-g1:['#top-hero','You win the work. We\u2019ll help you deliver. Greenmelons is a flexible creative partner for agencies that need extra hands, production support, or a reliable extension of their team.'],
-g2:['.make','Here\u2019s what we can support. White-label creative, overflow capacity, campaign adaptations and rollouts, and digital and print collateral. We work within your workflow, and never compete for your client relationships.'],
-g3:['.process','The process is simple. You send the brief, we plan the work together, we create and refine through agreed feedback rounds, and we hand over files ready for your workflow.'],
-g4:['.ways','We can work project by project, or on an ongoing basis. Tell us how often and how much you need, and we\u2019ll propose an arrangement.'],
-g5:['#agency-brief','Ready when you are. Got a brief? Let\u2019s make something happen. Send us an agency brief, and we\u2019ll come back to you by email.']};
+intro:['','Hey, welcome to Greenmelons. We help businesses and agencies turn ideas into finished creative work, without building a bigger team. One quick question. Are you a business, or an agency?'],
+b1:['#value','Marketing never slows down. Greenmelons gives you extra creative capacity, without hiring for every new project.'],
+b2:['#for','Think of us as your creative department. We work alongside your team, so your projects keep moving.'],
+b3:['#services','We can take on campaign creative, social and digital content, collateral, brand identity, website design, and campaign planning. Scope is always agreed up front.'],
+b4:['#how','You brief us. We agree scope, timeline and pricing. We create, with agreed feedback rounds, and deliver files ready to use.'],
+b5:['#support','Need more than one project? We can also provide ongoing creative support, with scope and fees agreed in advance.'],
+b6:['#contact','Got a project in mind? Send us a brief, and we\u2019ll reply by email.'],
+a1:['#value','When deadlines get tight, extra capacity helps. We give agencies more production power, without growing permanent headcount.'],
+a2:['#for','You win the work, we help you deliver. We can work behind the scenes, white-label where needed, with confidentiality agreed up front.'],
+a3:['#support','That could be one project, or recurring support, with scope and fees agreed in advance.'],
+a4:['#how','You brief us. We plan together, create with agreed feedback rounds, and hand over files ready for your workflow.'],
+g1:['#top-hero','You win the work, we help you deliver. Greenmelons is a flexible creative partner for agencies that need extra hands.'],
+g2:['.make','We support white-label creative, overflow capacity, campaign adaptations and rollouts, and digital and print collateral. We work within your workflow, and never compete for your clients.'],
+g3:['.process','Send the brief. We plan together, create with agreed feedback rounds, and hand over files ready for your workflow.'],
+g4:['.ways','Work with us project by project, or on an ongoing basis. Tell us what you need, and we\u2019ll propose an arrangement.'],
+g5:['#agency-brief','Ready when you are. Send us an agency brief, and we\u2019ll reply by email.']};
 const ROUTES={business:['b1','b2','b3','b4','b5','b6'],agency:onAgency?['g1','g2','g3','g4','g5']:['a1','a2','a3','a4']};
 const NAMES={intro:'Welcome',b1:'The challenge',b2:'Your creative department',b3:'Services',b4:'How we work',b5:'Ongoing support',b6:'Send a brief',a1:'The challenge',a2:'Working behind the scenes',a3:'Ongoing support',a4:'How we work',g1:'Agency partnerships',g2:'What we support',g3:'How we work',g4:'Ways to work',g5:'Send an agency brief'};
 let S=null,tok=0,voice=null,FILES=false,hl=null;
@@ -161,46 +161,48 @@ function render(){
   const wave='<span class="t-wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>';
   show('<div class="t-top"><span class="t-live">'+wave+ICON+'<span>'+(S.paused?'Paused':'Now showing')+': <b>'+NAMES[id]+'</b></span></span><button type="button" class="t-ic" data-a="mute" aria-pressed="'+S.muted+'">'+(S.muted?'Sound off':'Sound on')+'</button><button type="button" class="t-ic" data-a="exit" aria-label="Exit tour">Exit</button></div><p class="t-cap">'+capWords(id)+'</p>'+(S.note?'<p class="t-small">'+S.note+'</p>':'')+'<div class="t-bar" role="progressbar" aria-valuemin="0" aria-valuemax="'+n+'" aria-valuenow="'+(S.i+1)+'" aria-label="Tour progress"><i style="width:'+pct+'%"></i></div><div class="t-row"><button type="button" class="btn lime" data-a="'+(S.paused?'play':'pause')+'">'+(S.paused?'Play':'Pause')+'</button><button type="button" class="btn ghost" data-a="next">Skip</button><span class="t-count">'+(S.i+1)+' of '+n+'</span></div>');
 }
-/* --- karaoke: light words up as they're spoken (approximate, cancels cleanly) --- */
-function karaoke(id,my){
+/* --- karaoke: captions follow the real voice (word-boundary events), with sentence-level timing as backup --- */
+const hiTo=k=>{if(still||!S)return;const sp=el.querySelectorAll('.t-cap .w');for(let m=0;m<=k&&m<sp.length;m++)sp[m].classList.add('on')};
+function karaoke(id,my,total){/* reading-pace highlight: used when muted or captions-only */
  if(still)return;
- const spans=el.querySelectorAll('.t-cap .w');if(!spans.length)return;
- const parts=prosody(SCRIPT[id][1],seedOf(id));let idx=0,t=420;
- parts.forEach(p=>{
-  const ws=p.text.split(/\s+/).filter(Boolean),n=ws.length;
-  const ms=Math.max(850,p.text.length*66/p.rate),per=ms/Math.max(1,n);
-  for(let k=0;k<n;k++){const j=idx++;
-   setTimeout(()=>{if(my!==tok||!S)return;for(let m=0;m<=j&&m<spans.length;m++)spans[m].classList.add('on')},Math.round(t+k*per))}
-  t+=ms+200;
- });
+ const txt=SCRIPT[id][1],ws=txt.split(/\s+/),L=ws.reduce((a,w)=>a+w.length+1,0);total=total||Math.max(4500,txt.length*62)*.9;let acc=0;
+ ws.forEach((w,j)=>{setTimeout(()=>{if(my!==tok||!S)return;hiTo(j)},300+Math.round(acc/L*total));acc+=w.length+1});
 }
 /* --- narration --- */
-function after(my,id){if(my!==tok)return;el.classList.remove('speaking');if(id==='intro'&&!S.route){ask();return}setTimeout(()=>{if(my===tok&&!S.paused)go(S.i+1)},600)}
+function after(my,id){if(my!==tok)return;el.classList.remove('speaking');if(id==='intro'&&!S.route){ask();return}setTimeout(()=>{if(my===tok&&!S.paused)go(S.i+1)},800)}
 function speakLine(id,my,done){
- if(!SS){S.note='Voice isn\u2019t available in this browser. Captions only.';render();S.timer=setTimeout(done,Math.max(4500,SCRIPT[id][1].length*62));return}
- const parts=prosody(SCRIPT[id][1],seedOf(id));let i=0;
+ if(!SS){S.note='Voice isn\u2019t available in this browser. Captions only.';render();karaoke(id,my);S.timer=setTimeout(done,Math.max(4500,SCRIPT[id][1].length*62));return}
+ const parts=prosody(SCRIPT[id][1],seedOf(id));let i=0,base=0;
  el.classList.add('speaking');
  (function next(){
   if(my!==tok)return;
   if(i>=parts.length){el.classList.remove('speaking');done();return}
-  const p=parts[i++];
+  const p=parts[i++],b0=base,starts=[],tm=[];
+  p.text.replace(/\S+/g,(m,o)=>{starts.push(o);return m});base+=starts.length;
   const u=new SpeechSynthesisUtterance(p.text);u.lang='en';if(voice)u.voice=voice;u.rate=p.rate;u.pitch=p.pitch;
-  u.onend=()=>{if(my!==tok)return;setTimeout(next,200)};
-  u.onerror=ev=>{if(my!==tok||(ev&&/canceled|interrupted/.test(ev.error)))return;el.classList.remove('speaking');if(ev&&ev.error==='not-allowed'){S.blocked=1;S.note=TAP;render();return}S.note='Voice unavailable right now. Captions only.';render();S.timer=setTimeout(done,Math.max(4500,SCRIPT[id][1].length*62))};
+  /* backup: if the browser sends no word events, pace this sentence from the moment it actually starts speaking */
+  u.onstart=()=>{if(my!==tok||still)return;const per=Math.max(700,p.text.length*76/p.rate)/Math.max(1,starts.length);
+   starts.forEach((_,k)=>tm.push(setTimeout(()=>{if(my!==tok||S.bnd)return;hiTo(b0+k)},Math.round(k*per))))};
+  u.onboundary=e=>{if(my!==tok||(e.name&&e.name!=='word'))return;S.bnd=1;let k=0;for(let q=0;q<starts.length;q++)if(starts[q]<=e.charIndex)k=q;hiTo(b0+k)};
+  u.onend=()=>{if(my!==tok)return;tm.forEach(clearTimeout);hiTo(b0+starts.length-1);setTimeout(next,320)};
+  u.onerror=ev=>{if(my!==tok||(ev&&/canceled|interrupted/.test(ev.error)))return;tm.forEach(clearTimeout);el.classList.remove('speaking');if(ev&&ev.error==='not-allowed'){S.blocked=1;S.note=TAP;render();return}S.note='Voice unavailable right now. Captions only.';render();karaoke(id,my);S.timer=setTimeout(done,Math.max(4500,SCRIPT[id][1].length*62))};
   SS.speak(u);
  })();
 }
 function narrate(id,my){
  const text=SCRIPT[id][1];
  const timed=()=>{S.timer=setTimeout(()=>after(my,id),Math.max(4500,text.length*62))};
- karaoke(id,my);
- if(S.muted){timed();return}
+ S.bnd=0;
+ if(S.muted){karaoke(id,my);timed();return}
  const viaTts=()=>speakLine(id,my,()=>after(my,id));
  if(FILES){
   let a=S.audio&&S.audio.__id===id?S.audio:null;
   if(!a){a=new Audio('audio/'+id+'.mp3');a.__id=id;S.audio=a}
   el.classList.add('speaking');
-  a.playbackRate=SPEED;a.onended=()=>after(my,id);a.onerror=()=>{S.audio=null;viaTts()};
+  a.playbackRate=SPEED;
+  {const ws=text.split(/\s+/),cum=[];let L=0;ws.forEach(w=>{L+=w.length+1;cum.push(L)});
+   a.ontimeupdate=()=>{if(my!==tok||!a.duration)return;const f=a.currentTime/a.duration*L;let k=0;while(k<cum.length-1&&cum[k]<f)k++;hiTo(k)}}
+  a.onended=()=>after(my,id);a.onerror=()=>{S.audio=null;viaTts()};
   const p=a.play();if(p&&p.catch)p.catch(()=>{S.audio=null;viaTts()});return;
  }
  viaTts();
@@ -242,8 +244,28 @@ el.addEventListener('click',e=>{const b=e.target.closest('[data-a]');if(!b)retur
  else if(a==='exit')close('exit');else close();
 });
 fab.addEventListener('click',()=>{if(S)return;track('button_click');offer()});
+/* --- movable panel: drag it anywhere (mouse, touch or Alt+arrows); double-click resets; position is remembered --- */
+const POS='gm-tour-pos';let dr=null;
+const savePos=()=>{try{const r=el.getBoundingClientRect();sessionStorage.setItem(POS,JSON.stringify({x:Math.round(r.left),y:Math.round(r.top),w:Math.round(r.width)}))}catch(e){}};
+const place=(x,y,w)=>{const vw=innerWidth,vh=innerHeight;w=Math.min(w,vw-16);el.style.width=w+'px';el.style.right='auto';el.style.bottom='auto';
+ const h=el.getBoundingClientRect().height;el.style.left=Math.min(Math.max(8,x),vw-w-8)+'px';el.style.top=Math.min(Math.max(8,y),Math.max(8,vh-h-8))+'px'};
+const applyPos=()=>{let p=null;try{p=JSON.parse(sessionStorage.getItem(POS)||'null')}catch(e){}if(p&&!el.hidden)place(p.x,p.y,p.w||el.getBoundingClientRect().width)};
+const resetPos=()=>{['left','top','right','bottom','width'].forEach(k=>el.style[k]='');try{sessionStorage.removeItem(POS)}catch(e){}};
+new MutationObserver(()=>{if(!el.hidden&&el.style.left)requestAnimationFrame(applyPos)}).observe(el,{attributes:true,attributeFilter:['hidden']});
+el.addEventListener('pointerdown',e=>{if(e.button>0||e.target.closest('button,a,input,select,textarea'))return;
+ const r=el.getBoundingClientRect();dr={id:e.pointerId,dx:e.clientX-r.left,dy:e.clientY-r.top,w:r.width,moved:0};try{el.setPointerCapture(e.pointerId)}catch(x){}});
+el.addEventListener('pointermove',e=>{if(!dr||e.pointerId!==dr.id)return;
+ if(!dr.moved){dr.moved=1;el.classList.add('dragging')}
+ place(e.clientX-dr.dx,e.clientY-dr.dy,dr.w)});
+const endDrag=e=>{if(!dr||e.pointerId!==dr.id)return;if(dr.moved){el.classList.remove('dragging');savePos()}dr=null};
+el.addEventListener('pointerup',endDrag);el.addEventListener('pointercancel',endDrag);
+el.addEventListener('dblclick',e=>{if(!e.target.closest('button,a,input,select,textarea'))resetPos()});
+addEventListener('resize',()=>{if(!el.hidden&&el.style.left){const r=el.getBoundingClientRect();place(r.left,r.top,r.width);savePos()}});
+applyPos();
 /* scrolling by hand never pauses the tour; Escape closes it */
-addEventListener('keydown',e=>{if(e.key==='Escape'&&!el.hidden)close('exit')});
+addEventListener('keydown',e=>{if(e.key==='Escape'&&!el.hidden){close('exit');return}
+ if(e.altKey&&!el.hidden&&el.contains(document.activeElement)&&/^Arrow(Left|Right|Up|Down)$/.test(e.key)){e.preventDefault();const r=el.getBoundingClientRect(),d=24;
+  place(r.left+(e.key==='ArrowLeft'?-d:e.key==='ArrowRight'?d:0),r.top+(e.key==='ArrowUp'?-d:e.key==='ArrowDown'?d:0),r.width);savePos()}});
 /* --- keep the tour going across pages: resume where it left off after navigation --- */
 function gate(){
  const un=()=>{if(!S)return;wake();MUS.unlock();
