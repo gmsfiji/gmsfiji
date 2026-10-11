@@ -168,8 +168,9 @@ document.querySelectorAll('[data-r]').forEach(el=>io.observe(el));
     const s=1-.55*t,rot=cur*.45;
     r.style.width=sw+'px';
     r.style.transform=`translate(${x-sw/2}px,${y-sh/2}px) rotate(${rot}deg) scale(${s})`;
-    r.style.opacity=lift>0.02?1:0;
-    wrap.style.opacity=lift>0.02?String(1-lift):'';
+    const moved=ty>1||cur>1;   // swap instantly on the first scroll: no ghost left in the hero
+    r.style.opacity=moved?1:0;
+    wrap.style.opacity=moved?'0':'';
     run=Math.abs(ty-cur)>.3;if(run)requestAnimationFrame(frame);
   }
   const kick=()=>{if(!run){run=true;requestAnimationFrame(frame)}};
@@ -178,13 +179,13 @@ document.querySelectorAll('[data-r]').forEach(el=>io.observe(el));
 
 /* ---- funnel: panel/way links preselect the enquiry form; mobile sticky CTA ---- */
 (()=>{
-  document.querySelectorAll('.plink[data-pt]').forEach(a=>a.addEventListener('click',()=>{
+  document.querySelectorAll('[data-ct],[data-pt]').forEach(a=>a.addEventListener('click',()=>{
     const f=document.getElementById('contact-form');if(!f)return;
     const set=(n,v)=>{const s=f.elements[n];if(s&&[...s.options].some(o=>o.text===v))s.value=v};
-    set('project_type',a.dataset.pt);set('client_type',a.dataset.ct);
+    if(a.dataset.pt)set('project_type',a.dataset.pt);if(a.dataset.ct)set('client_type',a.dataset.ct);if(a.dataset.need)set('project_type','Ongoing creative support');
   }));
   const cta=document.querySelector('.sticky-cta'),hero=document.querySelector('.hero'),contact=document.getElementById('contact');
-  if(!cta)return;let past=false,atContact=false;
+  if(!cta||!hero||!contact)return;let past=false,atContact=false;
   const upd=()=>cta.classList.toggle('on',past&&!atContact);
   new IntersectionObserver(e=>{past=!e[0].isIntersecting;upd()}).observe(hero);
   new IntersectionObserver(e=>{atContact=e[0].isIntersecting;upd()},{threshold:.15}).observe(contact);
@@ -197,10 +198,27 @@ document.querySelectorAll('[data-r]').forEach(el=>io.observe(el));
     new IntersectionObserver(e=>{h=e[0].isIntersecting;upd()}).observe(hero);
     new IntersectionObserver(e=>{c=e[0].isIntersecting;upd()},{threshold:.1}).observe(contact);}
   const sel=document.querySelector('select[name=project_type]');
-  document.querySelectorAll('.index li').forEach(li=>{
+  document.querySelectorAll('#services .index li').forEach(li=>{
     const name=li.querySelector('h3').textContent.trim();
     const a=document.createElement('a');a.className='go';a.href='#contact';a.textContent='Start this \u2192';
     a.addEventListener('click',()=>{if(sel)[...sel.options].forEach(o=>{if(o.text===name)sel.value=o.text})});
     li.appendChild(a);
+  });
+})();
+
+/* "Agency" on the main form moves shared details to the agency brief; the agency page picks them up */
+(()=>{
+  const KEY='gm-agency-transfer',SHARED=['name','company','email','country','deadline'];
+  const f=document.getElementById('contact-form');if(!f)return;
+  const ct=f.elements.client_type,onAgency=location.pathname.endsWith('agency.html');
+  if(onAgency){
+    try{const d=JSON.parse(sessionStorage.getItem(KEY)||'null');if(d){SHARED.forEach(n=>{if(d[n]&&f.elements[n])f.elements[n].value=d[n]});sessionStorage.removeItem(KEY)}}catch(e){}
+    return;
+  }
+  ct.addEventListener('change',()=>{
+    if(ct.value!=='Agency')return;
+    const d={};SHARED.forEach(n=>{if(f.elements[n])d[n]=f.elements[n].value});
+    try{sessionStorage.setItem(KEY,JSON.stringify(d))}catch(e){}
+    ct.value='';location.href='agency.html#agency-brief';
   });
 })();
