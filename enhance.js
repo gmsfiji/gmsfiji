@@ -47,7 +47,7 @@ document.querySelectorAll('[data-count]').forEach(elm=>{
 /* 6. magnetic buttons + tilt cards + cursor glow (desktop, motion-safe only) */
 if(fine&&!still){
  /* spotlight glow follows the pointer */
- const glow=document.createElement('div');glow.className='gm-glow';glow.setAttribute('aria-hidden','true');document.body.appendChild(glow);
+ const glow=document.createElement('div');glow.className='gm-glow';glow.setAttribute('aria-hidden','true');/* cursor glow removed */
  let gx=innerWidth/2,gy=innerHeight/2,tx=gx,ty=gy,gRun=false;
  const gStep=()=>{gx+=(tx-gx)*.09;gy+=(ty-gy)*.09;glow.style.transform='translate('+(gx-260)+'px,'+(gy-260)+'px)';if(Math.abs(tx-gx)>.4||Math.abs(ty-gy)>.4)requestAnimationFrame(gStep);else gRun=false};
  addEventListener('pointermove',e=>{tx=e.clientX;ty=e.clientY;if(!gRun){gRun=true;requestAnimationFrame(gStep)}},{passive:true});

@@ -1,0 +1,111 @@
+/* Greenmelons: Summer edit
+   Loaded after style.css. Light mode is the sun-washed resort look.
+   Dark mode is untouched (it becomes the "evening" version). */
+
+:root{--linen:#FBF7EC;--sand:#F3EBD8;--lagoon:#D3ECE8;--sun:#F6D77A;--ink:#17340a}
+:root:not([data-theme=dark]){--bg:var(--linen);--strip:#9fd13c;--hair:rgba(34,72,15,.2)}
+:root[data-theme=dark]{--hair:rgba(242,233,219,.25)}
+
+/* type: lighter, finer, more editorial */
+h1,h2,h3,.big-quote,.big{font-weight:340;letter-spacing:-.022em;line-height:1.05;font-variation-settings:'SOFT' 100,'WONK' 0,'opsz' 144}
+h1 em,h2 em,.big em,.big-quote em{font-weight:320}
+.index h3,.p h3,.ways h3{font-weight:380}
+body{font-weight:420}
+
+/* ---------- header: frosted linen pill ---------- */
+:root:not([data-theme=dark]) .top{color:var(--green);background:rgba(251,247,236,.6);border-color:rgba(255,255,255,.75);box-shadow:0 14px 40px rgba(31,71,16,.14),inset 0 1px 0 rgba(255,255,255,.9)}
+:root:not([data-theme=dark]) .top.solid{background:rgba(251,247,236,.9);box-shadow:0 14px 40px rgba(31,71,16,.18),inset 0 1px 0 #fff}
+:root:not([data-theme=dark]) .mark,:root:not([data-theme=dark]) .mark .name,:root:not([data-theme=dark]) nav a:not(.cta),:root:not([data-theme=dark]) .menu-btn{color:var(--green)}
+:root:not([data-theme=dark]) .mark .logo,:root:not([data-theme=dark]) .top.solid .mark .logo{--logo-ink:var(--ink)}
+:root:not([data-theme=dark]) .theme{color:var(--green);border-color:var(--green)}
+:root:not([data-theme=dark]) .theme:hover{background:var(--green);color:var(--linen)}
+:root:not([data-theme=dark]) nav .cta{background:var(--green);color:var(--linen)}
+:root:not([data-theme=dark]) nav .cta:hover{background:var(--lime);color:var(--green)}
+:root:not([data-theme=dark]) .top :focus-visible{outline-color:var(--green)}
+
+/* ---------- hero: bright photo, soft green shade on the left instead of white ---------- */
+.hero{isolation:isolate}
+:root:not([data-theme=dark]) .hero::before{opacity:1;filter:saturate(1.08) contrast(1.03)}
+:root:not([data-theme=dark]) .hero::after{background:linear-gradient(90deg,rgba(18,48,10,.66) 0,rgba(18,48,10,.4) 34%,rgba(18,48,10,.08) 62%,transparent 78%)}
+/* lockup: letters fade from white to deep green, no glow or blur behind them */
+:root:not([data-theme=dark]) .gm-ink{fill:var(--ink)}
+:root:not([data-theme=dark]) .hero-lockup{filter:none}
+
+/* ---------- characters stand in front of a sun, not a lime disc ---------- */
+.char::before{background:radial-gradient(circle at 35% 30%,#FFF6CF 0,var(--sun) 48%,#F0C75A 100%);opacity:.95}
+
+/* ---------- audience panels become resort arches ---------- */
+.p{text-align:center;align-items:center;border:1px solid var(--hair);border-radius:300px 300px 34px 34px;padding:clamp(96px,11vw,150px) clamp(26px,3.4vw,52px) clamp(34px,4vw,52px);box-shadow:0 36px 60px -38px rgba(31,71,16,.45)}
+.p:hover{transform:translateY(-8px)}
+.p h3{padding-right:0}
+.p .badge{right:auto;left:50%;top:clamp(40px,5vw,64px);transform:translateX(-50%)}
+.p .plink{align-self:center}
+:root:not([data-theme=dark]) .p.lime{background:linear-gradient(180deg,#E4F2B4,#F4F9DC);color:var(--green)}
+:root:not([data-theme=dark]) .p.green{background:linear-gradient(180deg,var(--lagoon),#EEF8F3);color:var(--green)}
+:root:not([data-theme=dark]) .p.green h3{color:var(--green)}
+:root:not([data-theme=dark]) .p.green .badge{color:var(--green)}
+
+/* ---------- services: hairlines instead of heavy rules ---------- */
+.index{border-top:1px solid var(--hair)}
+.index li{border-bottom:1px solid var(--hair)}
+:root:not([data-theme=dark]) .index li::before{background:linear-gradient(90deg,#E4F2B4,#F6F0C8)}
+
+/* ---------- process: a lagoon band ---------- */
+:root:not([data-theme=dark]) .process{background:linear-gradient(180deg,var(--lagoon) 0,#EAF6EE 100%);color:var(--green)}
+:root:not([data-theme=dark]) .process h2,:root:not([data-theme=dark]) .process b{color:var(--green)}
+:root:not([data-theme=dark]) .process ol::before{background:var(--green);height:2px}
+:root:not([data-theme=dark]) .process li::before{background:var(--green);color:var(--linen)}
+
+/* ---------- support options ---------- */
+.ways article{border-top:1px solid var(--hair)}
+.ways article span{display:none}
+
+/* ---------- about: warm sun glow ---------- */
+:root:not([data-theme=dark]) .craft{background:radial-gradient(900px 520px at 88% 0,rgba(246,215,122,.4),transparent 70%),var(--bg)}
+
+/* ---------- contact: the one deep-green anchor, with gold light ---------- */
+.contact{background:linear-gradient(160deg,#1d4210,#16330b)}
+.contact input,.contact select,.contact textarea{border-color:rgba(169,218,68,.55);border-radius:16px}
+.contact .btn.lime:hover{background:var(--sun)}
+
+/* ---------- small things ---------- */
+.gm-glow{display:none!important}
+.btn,.cta{letter-spacing:.01em}
+.strip{padding:6px 0}
+:root:not([data-theme=dark]) .gm-progress{background:var(--lime)}
+
+@media(max-width:900px){
+  :root:not([data-theme=dark]) nav{background:rgba(251,247,236,.95);border-color:var(--hair)}
+  :root:not([data-theme=dark]) .hero::after{background:linear-gradient(180deg,rgba(18,48,10,.62) 0,rgba(18,48,10,.4) 55%,rgba(18,48,10,.1) 100%)}
+  .p{border-radius:200px 200px 28px 28px}
+}
+
+/* ---------- hero caption: solid pills so it reads on any part of the photo ---------- */
+:root:not([data-theme=dark]) .hero-cap .does{display:inline-block;background:var(--green);color:var(--linen);padding:9px 18px;border-radius:22px;font-weight:600}
+:root:not([data-theme=dark]) .hero-cap .where{background:var(--linen);color:var(--green);border-color:var(--linen)}
+
+/* ---------- photo features ---------- */
+.figband{padding:0 var(--pad) clamp(40px,6vw,90px)}
+.figband figure{margin:0 auto;max-width:1280px;border-radius:36px;overflow:hidden;border:1px solid var(--hair);box-shadow:0 40px 70px -40px rgba(31,71,16,.5)}
+.figband img{display:block;width:100%;height:auto}
+.arch{margin:36px auto 0;width:min(100%,380px);border-radius:28px;overflow:hidden;border:1px solid rgba(169,218,68,.55);box-shadow:0 30px 60px -34px rgba(0,0,0,.55)}
+.c-left .char-l{margin-top:44px}
+.arch img{display:block;width:100%;height:auto;max-width:100%}
+@media(max-width:900px){.figband figure{border-radius:24px}}
+
+/* agency callout: text left, photo right */
+.ways:has(.ways-img){display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);column-gap:clamp(28px,5vw,80px);align-items:center}
+.ways:has(.ways-img)>:not(.ways-img){grid-column:1}
+.ways-img{grid-column:2;grid-row:1/span 3;margin:0;border-radius:28px;overflow:hidden;border:1px solid var(--hair);box-shadow:0 36px 60px -38px rgba(31,71,16,.5)}
+.ways-img img{display:block;width:100%;height:auto}
+@media(max-width:900px){.ways:has(.ways-img){display:block}.ways-img{margin-top:32px}}
+
+/* agency hero: character clears the header, tighter gap before the next section */
+#top-hero .char-r{top:clamp(130px,11vw,200px)}
+#top-hero{padding-bottom:clamp(36px,4.5vw,70px)}
+#top-hero + .make{padding-top:clamp(36px,4.5vw,70px)}
+@media(max-width:900px){#top-hero .char-r{top:auto}}
+
+/* hero photo: enlarged and nudged so the clouds sit off to the right, not behind the lockup */
+.hero{overflow-x:clip}
+.hero::before{transform:scale(1.16);transform-origin:10% 50%}

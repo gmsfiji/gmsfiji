@@ -80,7 +80,7 @@ document.querySelectorAll('[data-r]').forEach(el=>io.observe(el));
   sync();
   btn.addEventListener('click',()=>{
     root.dataset.theme=root.dataset.theme==='dark'?'light':'dark';
-    try{localStorage.setItem('gm-theme',root.dataset.theme)}catch(e){}
+    try{localStorage.setItem('gm-theme-v2',root.dataset.theme)}catch(e){}
     sync();
   });
 })();
